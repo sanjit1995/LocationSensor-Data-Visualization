@@ -32,7 +32,7 @@ export const TableHeader = (props) => (
 );
 
 export const ResponseMessage = (props) => (
-    <p align='center'>
+    <p style={{align:'center'}}>
         {props.value}
     </p>
 );
@@ -43,4 +43,4 @@ export const DocumentHeader = (props) => (
     align='center'>
     Location Sensor Data
     </div>
-)
+);

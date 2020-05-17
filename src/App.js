@@ -3,6 +3,7 @@ import React from 'react';
 import { TableHeader, RowItem, RowInput, ResponseMessage, DocumentHeader } from './SubComponents.jsx'
 import './App.css';
 import X2JS from 'xml2json';
+import sample from './sample.png'
 
 function getInitialState() {
   return {
@@ -21,7 +22,7 @@ class App extends React.Component {
 
   setResponseHeader = (msg) => {
     this.setState((state, props) => {
-      const { rows, currentInput, responseMessage } = state;
+      const { rows, currentInput, responseMessage} = state;
       const newState = {
         rows: [...rows],
         currentInput: getInitialState(),
@@ -39,7 +40,7 @@ class App extends React.Component {
   submitInput = () => {
     if (this.validInput()) {
       this.setState((state, props) => {
-        const { rows, currentInput } = state;
+        const { rows, currentInput, responseMessage } = state;
         const newState = {
           rows: [...rows, currentInput],
           currentInput: getInitialState(),
@@ -94,8 +95,7 @@ class App extends React.Component {
           "content_type": "application/xml",
         },
         body: completeXml
-      }
-      )
+      })
         .then(response => response.text())
         .then(xml => {
           console.log(xml);
@@ -109,7 +109,7 @@ class App extends React.Component {
         });
 
       this.setState((state, props) => {
-        const { rows, currentInput, responseMessage } = state;
+        const { rows, currentInput, responseMessage} = state;
         const newState = {
           rows: [],
           currentInput: getInitialState(),
@@ -129,18 +129,6 @@ class App extends React.Component {
     })
   }
 
-  handleAddRow = () => {
-    const item = {
-      latitude: "",
-      longitude: "",
-      height: "",
-      button: "Confirm"
-    };
-    this.setState({
-      rows: [...this.state.rows, item]
-    });
-  };
-
   handleRemoveRow = (idx) => {
     console.log(idx)
     var tempRows = [...this.state.rows]; // make a separate copy of the array
@@ -155,6 +143,28 @@ class App extends React.Component {
       currentInput: getInitialState()
     });
   };
+
+  clearTable = () => {
+    fetch('/clear', {
+      method: "POST",
+      cache: "no-cache",
+      headers: {
+        "content_type": "application/xml",
+      },
+      body: ""
+    })
+      .then(response => response.text())
+      .then(xml => {
+        console.log(xml);
+        var x2js = new X2JS()
+        var jsonObj = x2js.xml_str2json(xml)
+        console.log(jsonObj.sensor_data.message)
+        this.setResponseHeader(jsonObj.sensor_data.message)
+      })
+      .catch((error) => {
+        this.setResponseHeader(error)
+      });
+  }
 
   render() {
     return (
@@ -171,7 +181,7 @@ class App extends React.Component {
                 <RowItem value={row.longitude} />
                 <RowItem value={row.height} />
                 <td style={{ textAlign: "center" }}>
-                  <button onClick={() => { this.handleRemoveRow(idx) }} padding="15px 32px" fontSize="40px" width="100%" tableLayout="fixed">
+                  <button onClick={() => { this.handleRemoveRow(idx) }} padding="15px 32px" fontSize="40px" width="100%">
                     Clear
                   </button>
                 </td>
@@ -201,10 +211,10 @@ class App extends React.Component {
               />
               <td style={{ textAlign: "center" }}>
                 {this.validInput() ? (
-                  <button onClick={this.submitInput} padding="15px 32px" fontSize="40px" width="100%" tableLayout="fixed">
+                  <button onClick={this.submitInput} padding="15px 32px" fontSize="40px" width="100%">
                     Confirm
                   </button>) : (
-                    <button onClick={this.removeCurrentInput} padding="15px 32px" fontSize="40px" width="100%" tableLayout="fixed">
+                    <button onClick={this.removeCurrentInput} padding="15px 32px" fontSize="40px" width="100%">
                       Clear
                     </button>
                   )}
@@ -212,20 +222,32 @@ class App extends React.Component {
             </tr>
           </tbody>
         </table>
-        <div style={{ textAlign: "center" }}>
-          <button
-            onClick={this.submitAll}
-            className="submit"
-            style={{
-              width: "25%", background: "#4CAF50", color: "white", cursor: "pointer",
-              margin: "4px 2px", padding: "8px 16px", boxSizing: "border-box", alignContent: 'center'
-            }}>
-            Submit
-        </button>
+        <div style={{textAlign: "center"}}>
+          <div style={{display: "inline-block" }}>
+            <button
+              onClick={this.submitAll}
+              className="submit"
+              style={{
+                width: "400px", background: "#4CAF50", color: "white", cursor: "pointer",
+                margin: "4px 2px", padding: "8px 16px", boxSizing: "border-box", alignContent: 'center'
+              }}>
+              Submit
+            </button>
+          </div>
+          <div style={{display: "inline-block" , float: "right", margin: "4px 8px"}}>
+            <button
+              onClick={this.clearTable}
+              className="clear"
+              padding="15px 32px" fontSize="40px"
+              >
+              Clear Table
+            </button>
+          </div>
         </div>
         <ResponseMessage
           value={this.state.responseMessage}
         />
+        <a href={sample}>Click Here</a> to see the plot
       </div>
     );
   }
