@@ -25,7 +25,7 @@ def result():
                 height = nodes.text
         with sql.connect("mySqlite.db") as con:
             cur = con.cursor()
-            #print(str(row[0]), str(row[1]), row[2])
+            # print(str(row[0]), str(row[1]), row[2])
             cur.execute("INSERT INTO location_sensor_data (latitude,longitude,height) VALUES (?,?,?)",
                         (latitude, longitude, height))
             con.commit()
@@ -36,8 +36,9 @@ def result():
             data["latitude"] = pd.to_numeric(data["latitude"], downcast="float")
             data["longitude"] = pd.to_numeric(data["longitude"], downcast="float")
             data["height"] = pd.to_numeric(data["height"], downcast="float")
-    drawPlot(data)
+            # data.to_csv(path_or_buf=r"c:\react_js_app\public\lat-lon.csv", sep=",", na_rep="NA")
     return "<?xml version='1.0' encoding='UTF-8'?><sensor_data><statusCode>200</statusCode><status>OK</status><message>Data has been successfully stored</message></sensor_data>"
+
 
 @app.route('/clear', methods=['POST'])
 def clear():
@@ -47,5 +48,11 @@ def clear():
         con.commit()
     return "<?xml version='1.0' encoding='UTF-8'?><sensor_data><statusCode>200</statusCode><status>OK</status><message>Data has been cleared</message></sensor_data>"
 
+
+@app.route('/plotImage', methods=['GET'])
+def plotImage():
+    return drawPlot()
+
+
 if __name__ == '__main__':
- app.run(debug=True)
+    app.run(debug=True)

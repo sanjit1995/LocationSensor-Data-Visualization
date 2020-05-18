@@ -5,10 +5,28 @@ from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import io
+from PIL import Image
+from flask import send_file, make_response, jsonify
+import base64
+import sqlite3 as sql
+import cv2
 
-def drawPlot(table_data):
-    #df = pd.read_csv(r'c:\react_js_app\public\lat-lon.csv')
-    df = pd.DataFrame(table_data)
+def drawPlot():
+    with sql.connect("mySqlite.db") as con:
+        cur = con.cursor()
+        cur.execute("select * from location_sensor_data")
+        tdata = cur.fetchall()
+        data = pd.DataFrame(tdata)
+        if len(data) == 0:
+            return "NO DATA AVAILABLE"
+        data.columns = ['latitude', 'longitude', 'height']
+        data["latitude"] = pd.to_numeric(data["latitude"], downcast="float")
+        data["longitude"] = pd.to_numeric(data["longitude"], downcast="float")
+        data["height"] = pd.to_numeric(data["height"], downcast="float")
+        print(data)
+    df = data
+    #df = pd.DataFrame(table_data)
 
     lats = df['latitude'].values
     lons = df['longitude'].values
@@ -39,5 +57,27 @@ def drawPlot(table_data):
         # if i < len(heights)-1:
         #     plt.arrow(lons[i], lats[i], lons[i+1]-lons[i], lats[i+1]-lats[i], fc="k", ec="k", linewidth=0.5, head_width=10000, head_length=10000)
         ax.annotate(str(heights[i]), (lons[i], lats[i]), xytext=(0.3, 0.3), textcoords='offset points')
-    plt.savefig(r'c:\react_js_app\src\sample.png', dpi=1280)
+    #plt.savefig(r'c:\react_js_app\src\sample.png', dpi=1280)
+    #ssnp.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    img_base64 = base64.b64encode(buf.read())
+    return jsonify({'status': str(img_base64)})
+
+    # with buf as image_file:
+    #     encoded_string = base64.b64encode(image_file.read())
+    # # encoded_string = base64.b64encode(buf)
+    # print(encoded_string)
+    # imageString = base64.b64decode(encoded_string)
+    # nparr = np.frombuffer(imageString, np.uint8)
+    # img = cv2.imdecode(nparr, cv2.IMREAD_ANYCOLOR)
+    # #print(img)
+    # response = {"image": encoded_string}
+    # return jsonify(response)
+
+
+    # return send_file(
+    #     img,
+    #     mimetype='image/png')
     #plt.show()

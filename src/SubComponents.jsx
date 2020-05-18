@@ -31,8 +31,8 @@ export const TableHeader = (props) => (
     </thead>
 );
 
-export const ResponseMessage = (props) => (
-    <p style={{align:'center'}}>
+export var ResponseMessage = (props) => (
+    <p align='center'>
         {props.value}
     </p>
 );

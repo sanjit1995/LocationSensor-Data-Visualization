@@ -3,7 +3,7 @@ import React from 'react';
 import { TableHeader, RowItem, RowInput, ResponseMessage, DocumentHeader } from './SubComponents.jsx'
 import './App.css';
 import X2JS from 'xml2json';
-import sample from './sample.png'
+import base64 from 'react-native-base64';
 
 function getInitialState() {
   return {
@@ -17,12 +17,13 @@ class App extends React.Component {
   state = {
     rows: [],
     currentInput: getInitialState(),
-    responseMessage: ""
+    responseMessage: "",
+    pic: ""
   };
 
   setResponseHeader = (msg) => {
     this.setState((state, props) => {
-      const { rows, currentInput, responseMessage} = state;
+      const { rows, currentInput, responseMessage } = state;
       const newState = {
         rows: [...rows],
         currentInput: getInitialState(),
@@ -103,13 +104,14 @@ class App extends React.Component {
           var jsonObj = x2js.xml_str2json(xml)
           console.log(jsonObj.sensor_data.message)
           this.setResponseHeader(jsonObj.sensor_data.message)
+          console.log(this.state.responseMessage)
         })
         .catch((error) => {
           this.setResponseHeader(error)
         });
 
       this.setState((state, props) => {
-        const { rows, currentInput, responseMessage} = state;
+        const { rows, currentInput, responseMessage } = state;
         const newState = {
           rows: [],
           currentInput: getInitialState(),
@@ -164,6 +166,37 @@ class App extends React.Component {
       .catch((error) => {
         this.setResponseHeader(error)
       });
+  }
+
+  fetchImage = () => {
+    var outside;
+    fetch('/plotImage', {
+      method: "GET",
+      cache: "no-cache",
+      headers: {
+        "content_type": "application/text",
+      }
+    })
+    .then(response => response.json())
+    .then(json => {
+      //console.log(json.status);
+      var imgContent = "data:image/png;base64, " + json.status;
+      imgContent = imgContent.replace("b'","");
+      imgContent = imgContent.replace("'","");
+      //console.log(imgContent)
+      this.setState({
+        pic: imgContent
+      });
+    })
+      .catch((error) => {
+        this.setResponseHeader(error)
+      });
+  }
+
+  clearImage = () => {
+    this.setState({
+      pic: ""
+    });
   }
 
   render() {
@@ -222,8 +255,8 @@ class App extends React.Component {
             </tr>
           </tbody>
         </table>
-        <div style={{textAlign: "center"}}>
-          <div style={{display: "inline-block" }}>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ display: "inline-block" }}>
             <button
               onClick={this.submitAll}
               className="submit"
@@ -234,20 +267,27 @@ class App extends React.Component {
               Submit
             </button>
           </div>
-          <div style={{display: "inline-block" , float: "right", margin: "4px 8px"}}>
+          <div style={{ display: "inline-block", float: "right", margin: "4px 8px" }}>
             <button
               onClick={this.clearTable}
               className="clear"
-              padding="15px 32px" fontSize="40px"
-              >
+              padding="15px 32px" fontSize="40px" style={{ margin: "4px 2px" }}>
               Clear Table
             </button>
           </div>
         </div>
         <ResponseMessage
-          value={this.state.responseMessage}
-        />
-        <a href={sample}>Click Here</a> to see the plot
+          value={this.state.responseMessage} />
+        <div style={{ display: "inline-block", margin: "1px 16px"}}>
+          <button onClick={this.fetchImage}>View Plot</button>
+        </div>
+        <div style={{ display: "inline-block", float: "right", margin: "1px 16px"}}>
+          <button onClick={this.clearImage}>Clear Plot</button>
+        </div>
+        <div>
+          
+        </div>
+        <img style={{width:"1200px", height:"600px", objectFit:"contain"}} src={this.state.pic} alt=""/>
       </div>
     );
   }
