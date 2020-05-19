@@ -37,7 +37,7 @@ def result():
             data["longitude"] = pd.to_numeric(data["longitude"], downcast="float")
             data["height"] = pd.to_numeric(data["height"], downcast="float")
             # data.to_csv(path_or_buf=r"c:\react_js_app\public\lat-lon.csv", sep=",", na_rep="NA")
-    return "<?xml version='1.0' encoding='UTF-8'?><sensor_data><statusCode>200</statusCode><status>OK</status><message>Data has been successfully stored</message></sensor_data>"
+    return "<?xml version='1.0' encoding='UTF-8'?><sensor_data><status_code>200</status_code><status>OK</status><message>Data has been successfully stored</message></sensor_data>"
 
 
 @app.route('/clear', methods=['POST'])
@@ -46,12 +46,17 @@ def clear():
         cur = con.cursor()
         cur.execute("delete from location_sensor_data")
         con.commit()
-    return "<?xml version='1.0' encoding='UTF-8'?><sensor_data><statusCode>200</statusCode><status>OK</status><message>Data has been cleared</message></sensor_data>"
+    return "<?xml version='1.0' encoding='UTF-8'?><sensor_data><status_code>200</status_code><status>OK</status><message>Data has been cleared</message></sensor_data>"
 
 
 @app.route('/plotImage', methods=['GET'])
 def plotImage():
-    return drawPlot()
+    imgData = drawPlot()
+    if imgData == "NA":
+        statusCode = 500
+    else:
+        statusCode = 200
+    return "<?xml version='1.0' encoding='UTF-8'?><sensor_data><status_code>" + str(statusCode) + "</status_code><status>OK</status><image_data>" + imgData + "</image_data></sensor_data>"
 
 
 if __name__ == '__main__':

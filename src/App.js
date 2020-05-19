@@ -177,16 +177,30 @@ class App extends React.Component {
         "content_type": "application/text",
       }
     })
-    .then(response => response.json())
-    .then(json => {
+    .then(response => response.text())
+    .then(xml => {
       //console.log(json.status);
-      var imgContent = "data:image/png;base64, " + json.status;
+      var x2js = new X2JS()
+      var jsonObj = x2js.xml_str2json(xml)
+      var imgContent = "data:image/png;base64, " + jsonObj.sensor_data.image_data;
+      //console.log(jsonObj.sensor_data.status_code);
+      var statusVal = jsonObj.sensor_data.status_code
       imgContent = imgContent.replace("b'","");
       imgContent = imgContent.replace("'","");
       //console.log(imgContent)
-      this.setState({
-        pic: imgContent
-      });
+      if(statusVal === "200"){
+        console.log("if");
+        this.setState({
+          pic: imgContent
+        });
+      }
+      else{
+        console.log("else");
+        this.setState({
+          pic: ""
+        });
+        this.setResponseHeader(jsonObj.sensor_data.image_data)
+      };
     })
       .catch((error) => {
         this.setResponseHeader(error)
@@ -284,10 +298,7 @@ class App extends React.Component {
         <div style={{ display: "inline-block", float: "right", margin: "1px 16px"}}>
           <button onClick={this.clearImage}>Clear Plot</button>
         </div>
-        <div>
-          
-        </div>
-        <img style={{width:"1200px", height:"600px", objectFit:"contain"}} src={this.state.pic} alt=""/>
+        <img style={{width:"1200px", height:"800px", objectFit:"contain"}} src={this.state.pic} alt=""/>
       </div>
     );
   }

@@ -78,4 +78,21 @@ def drawPlot():
     # #return {"image": encoded_string}
     # #plt.show()
 
+    # with buf as image_file:
+    #     encoded_string = base64.b64encode(image_file.read())
+    # # encoded_string = base64.b64encode(buf)
+    # print(encoded_string)
+    # imageString = base64.b64decode(encoded_string)
+    # nparr = np.frombuffer(imageString, np.uint8)
+    # img = cv2.imdecode(nparr, cv2.IMREAD_ANYCOLOR)
+    # #print(img)
+    # response = {"image": encoded_string}
+    # return jsonify(response)
+
+
+    # return send_file(
+    #     img,
+    #     mimetype='image/png')
+    #plt.show()
+
 drawPlot()

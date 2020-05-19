@@ -3,14 +3,10 @@ import os
 os.environ['PROJ_LIB'] = r'c:\ProgramData\Anaconda3\pkgs\proj4-5.2.0-ha925a31_1\Library\share'
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import io
-from PIL import Image
-from flask import send_file, make_response, jsonify
 import base64
 import sqlite3 as sql
-import cv2
 
 def drawPlot():
     with sql.connect("mySqlite.db") as con:
@@ -24,9 +20,8 @@ def drawPlot():
         data["latitude"] = pd.to_numeric(data["latitude"], downcast="float")
         data["longitude"] = pd.to_numeric(data["longitude"], downcast="float")
         data["height"] = pd.to_numeric(data["height"], downcast="float")
-        print(data)
+        #print(data)
     df = data
-    #df = pd.DataFrame(table_data)
 
     lats = df['latitude'].values
     lons = df['longitude'].values
@@ -40,44 +35,21 @@ def drawPlot():
                 urcrnrlon=180,
                 ax=ax)
 
-    m.drawcoastlines()
+    #m.drawcoastlines()
     m.drawcountries()
-    m.drawstates()
-    m.drawmapboundary(fill_color='#46bcec')
-    m.fillcontinents(color='green', lake_color='#46bcec')
+    #m.drawstates()
+    m.drawmapboundary(fill_color='aqua')
+    m.fillcontinents(color='lightgreen', lake_color='aqua')
     # convert lat and lon to map projection coordinates
     lons, lats = m(lons, lats)
 
-    # ax.scatter(lons,lats)
-    # plot points as red dots
     m.plot(lons, lats, marker='.', markersize=5, linewidth=1, color='r')
     heights = df['height']
     for i in range(0, len(heights)):
-        # print(heights[i])
-        # if i < len(heights)-1:
-        #     plt.arrow(lons[i], lats[i], lons[i+1]-lons[i], lats[i+1]-lats[i], fc="k", ec="k", linewidth=0.5, head_width=10000, head_length=10000)
-        ax.annotate(str(heights[i]), (lons[i], lats[i]), xytext=(0.3, 0.3), textcoords='offset points')
-    #plt.savefig(r'c:\react_js_app\src\sample.png', dpi=1280)
-    #ssnp.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
+        ax.annotate(str(heights[i]) + "m", (lons[i], lats[i]), xytext=(0.01, 0.01), textcoords='offset points')
     buf = io.BytesIO()
-    plt.savefig(buf, format='png')
+    plt.savefig(buf, format='png', dpi=1280)
     buf.seek(0)
     img_base64 = base64.b64encode(buf.read())
-    return jsonify({'status': str(img_base64)})
-
-    # with buf as image_file:
-    #     encoded_string = base64.b64encode(image_file.read())
-    # # encoded_string = base64.b64encode(buf)
-    # print(encoded_string)
-    # imageString = base64.b64decode(encoded_string)
-    # nparr = np.frombuffer(imageString, np.uint8)
-    # img = cv2.imdecode(nparr, cv2.IMREAD_ANYCOLOR)
-    # #print(img)
-    # response = {"image": encoded_string}
-    # return jsonify(response)
-
-
-    # return send_file(
-    #     img,
-    #     mimetype='image/png')
-    #plt.show()
+    #return jsonify({'status': str(img_base64)})
+    return str(img_base64)
