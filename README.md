@@ -30,18 +30,18 @@ The project uses React JS Framework as the front-end website and flask(python) a
 Check installation by **npm -v** in the command line. This should print the version installed.
 * Install npx using **npm install -g npx** (https://www.npmjs.com/package/npx)
 * Create a react application in the directory of your choice by following command:
-**npx create-react-app <name-of-app>** (https://create-react-app.dev/docs)
+**npx create-react-app [name-of-app]** (https://create-react-app.dev/docs)
 * This creates a pre-configured set of items required as a template and can be edited as per requirement.
 * To test the react web application type the following commands:
-**cd <name-of-app>**
+**cd [name-of-app]**  
 **npm start**
 * This will launch the application automatically at http://localhost:3000/
 * A default web page appears and now we are good to go.
-* Please copy the contents of the React folder in the .zip file to the location of **<name-of-app>** and replace the existing directories if required.
+* Please copy the contents of the React folder in the .zip file to the location of **[name-of-app]** and replace the existing directories if required.
 * To learn about the default files and folder structure go to : https://create-react-app.dev/docs/folder-structure
-* An additional dependency **"xml2json"** is to be installed. Please download it from https://github.com/abdolence/x2js as .zip. Unzip the contents and copy the folder into <name-of-app>. Rename the folder as **"xml2json"** if it is present as **"x2js"**.
+* An additional dependency **"xml2json"** is to be installed. Please download it from https://github.com/abdolence/x2js as .zip. Unzip the contents and copy the folder into **[name-of-app]**. Rename the folder as **"xml2json"** if it is present as **"x2js"**.
 * An additional file named "SubComponents.js" contains all the SubComponents used in "App.js"
-* In the **"package.json"** file inside **<name-of-app>** which holds all the metadata relevant to the project, ensure that the proxy address is present at the end :
+* In the **"package.json"** file inside **[name-of-app]** which holds all the metadata relevant to the project, ensure that the proxy address is present at the end :
 **"proxy": "http://127.0.0.1:5000/"**
 This is the backend side server address which will be routed to during runtime.
 
@@ -71,7 +71,7 @@ Plese refer to the set of dependent libraries listed above and install if not al
 For more information : https://github.com/matplotlib/basemap/issues/419
 
 ##### Final code run :
-* Start the FrontEnd server by following command inside **<name-of-app>** directory :
+* Start the FrontEnd server by following command inside **[name-of-app]** directory :
 **npm start**  
 This runs at http://localhost:3000/
 * Start the BackEnd server by following command inside your local **"backend"** directory :
