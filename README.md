@@ -8,7 +8,8 @@ The project uses React JS Framework as the front-end website and flask(python) a
 
 #### Other Dependencies:
 * npm module xml2json (https://github.com/abdolence/x2js)
-* python libraries required for backend :  
+* python libraries required for backend :
+    
     * flask
     * sqlite3
     * xml
@@ -71,10 +72,10 @@ For more information : https://github.com/matplotlib/basemap/issues/419
 
 ##### Final code run :
 * Start the FrontEnd server by following command inside **<name-of-app>** directory :
-**npm start**
+**npm start**  
 This runs at http://localhost:3000/
 * Start the BackEnd server by following command inside your local **"backend"** directory :
-**python backend_flask_xml.py**
+**python backend_flask_xml.py**  
 This runs at http://127.0.0.1:5000/
 
 Hope this was helpful information. Enjoy Coding !
