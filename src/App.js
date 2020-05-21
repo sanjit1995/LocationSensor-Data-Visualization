@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { TableHeader, RowItem, RowInput, ResponseMessage, DocumentHeader } from './SubComponents.jsx'
+import { TableHeader, RowItem, RowInput, ResponseMessage, DocumentHeader } from './SubComponents.js'
 import './App.css';
 import X2JS from 'xml2json';
-import base64 from 'react-native-base64';
 
 function getInitialState() {
   return {
@@ -14,15 +13,19 @@ function getInitialState() {
 }
 
 class App extends React.Component {
-  state = {
-    rows: [],
-    currentInput: getInitialState(),
-    responseMessage: "",
-    pic: ""
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      rows: [],
+      currentInput: getInitialState(),
+      responseMessage: "",
+      pic: ""
+    };
+  }
 
   setResponseHeader = (msg) => {
-    this.setState((state, props) => {
+    this.setState((state) => {
       const { rows, currentInput, responseMessage } = state;
       const newState = {
         rows: [...rows],
@@ -58,7 +61,6 @@ class App extends React.Component {
 
   convertToXml = () => {
     var x2js = new X2JS()
-    var xmlAsStr = x2js.json2xml_str(JSON.parse(JSON.stringify(this.state.rows)))
     const tempRows = this.state.rows
     var xmlStart = "<?xml version='1.0' encoding='UTF-8'?><sensor_data>"
     console.log(xmlStart)
@@ -97,7 +99,13 @@ class App extends React.Component {
         },
         body: completeXml
       })
-        .then(response => response.text())
+        .then(response => {
+          //console.log(response.status);
+          if(response.status === 500){
+            throw new Error("SERVER_ERR_500 : CHECK SERVER CONNECTION")
+          }
+          return response.text();
+        })
         .then(xml => {
           console.log(xml);
           var x2js = new X2JS()
@@ -107,10 +115,11 @@ class App extends React.Component {
           console.log(this.state.responseMessage)
         })
         .catch((error) => {
-          this.setResponseHeader(error)
+          console.log(error.message)
+          this.setResponseHeader(error.message)
         });
 
-      this.setState((state, props) => {
+      this.setState((state) => {
         const { rows, currentInput, responseMessage } = state;
         const newState = {
           rows: [],
@@ -164,7 +173,8 @@ class App extends React.Component {
         this.setResponseHeader(jsonObj.sensor_data.message)
       })
       .catch((error) => {
-        this.setResponseHeader(error)
+        console.log(error.message)
+        this.setResponseHeader(error.message)
       });
   }
 
@@ -177,7 +187,13 @@ class App extends React.Component {
         "content_type": "application/text",
       }
     })
-    .then(response => response.text())
+    .then(response => {
+        //console.log(response.status);
+        if(response.status === 500){
+            throw new Error("SERVER_ERR_500 : CHECK SERVER CONNECTION")
+        }
+        return response.text();
+    })
     .then(xml => {
       //console.log(json.status);
       var x2js = new X2JS()
@@ -189,21 +205,19 @@ class App extends React.Component {
       imgContent = imgContent.replace("'","");
       //console.log(imgContent)
       if(statusVal === "200"){
-        console.log("if");
         this.setState({
           pic: imgContent
         });
       }
       else{
-        console.log("else");
         this.setState({
           pic: ""
         });
-        this.setResponseHeader(jsonObj.sensor_data.image_data)
-      };
+        throw new Error("DATA_ERR_500 : No Data Available")
+      }
     })
       .catch((error) => {
-        this.setResponseHeader(error)
+        this.setResponseHeader(error.message)
       });
   }
 
@@ -275,7 +289,7 @@ class App extends React.Component {
               onClick={this.submitAll}
               className="submit"
               style={{
-                width: "400px", background: "#4CAF50", color: "white", cursor: "pointer",
+                width: "400px", background: "#4CAF50", color: "white", cursor: "pointer", border: "none",
                 margin: "4px 2px", padding: "8px 16px", boxSizing: "border-box", alignContent: 'center'
               }}>
               Submit

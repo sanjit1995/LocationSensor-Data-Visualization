@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { TableHeader, RowItem, RowInput, ResponseMessage } from './SubComponents.jsx'
+import { TableHeader, RowItem, RowInput, ResponseMessage } from './SubComponents.js'
 import './App.css';
 import X2JS from 'xml2json';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableHeader, RowItem, RowInput } from './SubComponents.jsx'
+import { TableHeader, RowItem, RowInput } from './SubComponents.js'
 import './App.css';
 
 class App extends React.Component {
