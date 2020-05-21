@@ -42,18 +42,19 @@ Check installation by **npm -v** in the command line. This should print the vers
 * An additional dependency **"xml2json"** is to be installed. Please download it from https://github.com/abdolence/x2js as .zip. Unzip the contents and copy the folder into **[name-of-app]**. Rename the folder as **"xml2json"** if it is present as **"x2js"**.
 * An additional file named "SubComponents.js" contains all the SubComponents used in "App.js"
 * In the **"package.json"** file inside **[name-of-app]** which holds all the metadata relevant to the project, ensure that the proxy address is present at the end :  
-**"proxy": "http://127.0.0.1:5000/"**
+**"proxy": "http://127.0.0.1:5000/"**  
 This is the backend side server address which will be routed to during runtime.
 
 ##### Server Side Instructions :
 * To install python go to : https://www.python.org/downloads/ depending on the OS.
-* Download and install **"pip"** which is the package manager for python and can be used to install packages from command line. For information on how to install go to : https://pip.pypa.io/en/stable/installing/
+* Download and install **"pip"** which is the package manager for python and can be used to install packages from command line.   
+For information on how to install go to : https://pip.pypa.io/en/stable/installing/
 * Once the above steps are done, this can be verified with below command :   
 **python -m pip --version**
 * Copy the content of **"backend"** folder inside the .zip file to local.
 * Now we need to install the dependent libraries required for this project. This can be done by :  
-**pip install <library-name>**
-Plese refer to the set of dependent libraries listed above and install if not already present.
+**pip install [library-name]**  
+Please refer to the set of dependent libraries listed above and install if not already present.
 * **"Flask"** library handles the routing section in the backend server.
 * Files description :
     * **backend_flask_xml.py** : The main python file which has all the routing instructions and the respective functions to handle the data
