@@ -8,7 +8,7 @@ The project uses React JS Framework as the front-end website and flask(python) a
 
 #### Other Dependencies:
 * npm module xml2json (https://github.com/abdolence/x2js)
-* python libraries required for backend :
+* python libraries required for backend :  
     * flask
     * sqlite3
     * xml
@@ -65,8 +65,8 @@ Plese refer to the set of dependent libraries listed above and install if not al
 * All the transactions are in XML.
     * StatusCode **200** for **Success**
     * StatusCode **500** for **failure**
-* Please ensure that the following line is present right after **"import os"** as it is an ENV_VARIABLE declaration necessary for **"Basemap"** :
-**os.environ['PROJ_LIB'] = r'c:\ProgramData\Python\pkgs\proj4-5.2.0-ha925a31_1\Library\share'**
+* Please ensure that the following line is present right after **"import os"** as it is an ENV_VARIABLE declaration necessary for **"Basemap"** :  
+**os.environ['PROJ_LIB'] = r'c:\ProgramData\Python\pkgs\proj4-5.2.0-ha925a31_1\Library\share'**  
 For more information : https://github.com/matplotlib/basemap/issues/419
 
 ##### Final code run :
