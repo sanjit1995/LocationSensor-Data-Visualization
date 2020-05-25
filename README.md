@@ -71,14 +71,14 @@ Please refer to the set of dependent libraries listed above and install if not a
 * Please ensure that the following line is present right after **"import os"** as it is an ENV_VARIABLE declaration necessary for **"Basemap"** :  
 **os.environ['PROJ_LIB'] = r'c:\ProgramData\Python\pkgs\proj4-5.2.0-ha925a31_1\Library\share'**  
 * In case of creation of new .db file, please run the below commands in python console or in a new python file :  
-from sqlalchemy import create_engine  
-import sqlite3 as sql  
-create_engine('sqlite:///C:\\react_js_app\\backend\\mySqlite.db', echo=True)  
-conn = sql.connect('mySqlite.db')  
-print("Opened database successfully")  
+**from sqlalchemy import create_engine**  
+**import sqlite3 as sql**  
+**create_engine('sqlite:///C:\\react_js_app\\backend\\mySqlite.db', echo=True)**  
+**conn = sql.connect('mySqlite.db')**  
+**print("Opened database successfully")**  
 * In case the table needs to be recreated, please run below commands as well :   
-conn.execute('CREATE TABLE location_sensor_data (latitude TEXT, longitude TEXT, height INT)')  
-print("Table created successfully")  
+**conn.execute('CREATE TABLE location_sensor_data (latitude TEXT, longitude TEXT, height INT)')**  
+**print("Table created successfully")**  
 For more information : https://github.com/matplotlib/basemap/issues/419
 
 ##### Final code run :
