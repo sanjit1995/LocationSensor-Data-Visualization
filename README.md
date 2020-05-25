@@ -70,6 +70,7 @@ Please refer to the set of dependent libraries listed above and install if not a
     * StatusCode **500** for **failure**
 * Please ensure that the following line is present right after **"import os"** as it is an ENV_VARIABLE declaration necessary for **"Basemap"** :  
 **os.environ['PROJ_LIB'] = r'c:\ProgramData\Python\pkgs\proj4-5.2.0-ha925a31_1\Library\share'**  
+For more information : https://github.com/matplotlib/basemap/issues/419
 * In case of creation of new .db file, please run the below commands in python console or in a new python file :  
 **from sqlalchemy import create_engine**  
 **import sqlite3 as sql**  
@@ -79,7 +80,6 @@ Please refer to the set of dependent libraries listed above and install if not a
 * In case the table needs to be recreated, please run below commands as well :   
 **conn.execute('CREATE TABLE location_sensor_data (latitude TEXT, longitude TEXT, height INT)')**  
 **print("Table created successfully")**  
-For more information : https://github.com/matplotlib/basemap/issues/419
 
 ##### Final code run :
 * Start the FrontEnd server by following command inside **[name-of-app]** directory :  
