@@ -164,18 +164,25 @@ class App extends React.Component {
       },
       body: ""
     })
-      .then(response => response.text())
-      .then(xml => {
-        console.log(xml);
-        var x2js = new X2JS()
-        var jsonObj = x2js.xml_str2json(xml)
-        console.log(jsonObj.sensor_data.message)
-        this.setResponseHeader(jsonObj.sensor_data.message)
-      })
-      .catch((error) => {
-        console.log(error.message)
-        this.setResponseHeader(error.message)
-      });
+        .then(response => {
+            //console.log(response.status);
+            if(response.status === 500){
+                throw new Error("SERVER_ERR_500 : CHECK SERVER CONNECTION")
+            }
+            return response.text();
+        })
+        .then(xml => {
+            console.log(xml);
+            var x2js = new X2JS()
+            var jsonObj = x2js.xml_str2json(xml)
+            console.log(jsonObj.sensor_data.message)
+            this.setResponseHeader(jsonObj.sensor_data.message)
+            console.log(this.state.responseMessage)
+        })
+        .catch((error) => {
+            console.log(error.message)
+            this.setResponseHeader(error.message)
+        });
   }
 
   fetchImage = () => {
