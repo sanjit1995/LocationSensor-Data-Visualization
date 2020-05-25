@@ -1,24 +1,24 @@
 #### This project is a part of Communication and Visualization Coursework belonging to HsKA.
 The project uses React JS Framework as the front-end website and flask(python) as the backend framework. The Website runs on the development server which comes available with the react application.
 
-* For more information about ReactJS : https://reactjs.org/docs/
-* For more information on Python : https://docs.python.org/3/
-* For more information on Flask : https://flask.palletsprojects.com/en/1.1.x/
-* For more information on Basemap : https://matplotlib.org/basemap/
+* For more information about **ReactJS** : https://reactjs.org/docs/
+* For more information on **Python** : https://docs.python.org/3/
+* For more information on **Flask** : https://flask.palletsprojects.com/en/1.1.x/
+* For more information on **Basemap** : https://matplotlib.org/basemap/
 
 #### Other Dependencies:
-* npm module xml2json (https://github.com/abdolence/x2js)
+* npm module **xml2json** (https://github.com/abdolence/x2js)
 * python libraries required for backend :
     
-    * flask : Handle the routing operations between frontend and backend
-    * sqlite3, sqlalchemy(optional, required if a new db has to be created) : For database operations
-    * xml, io, os : Usually available with python package, used fo system and file operations
-    * pandas, base64 : For data operations
-    * matplotlib, mpl_toolkits : For operations involving data plotting
+    * **flask** : Handle the routing operations between frontend and backend
+    * **sqlite3, sqlalchemy(optional, required if a new db has to be created)** : For database operations
+    * **xml, io, os** : Usually available with python package, used fo system and file operations
+    * **pandas, base64** : For data operations
+    * **matplotlib, mpl_toolkits** : For operations involving data plotting
 
 ### Error Codes :
-* SERVER_ERR_500 : Server side connection issue
-* DATA_ERR_500 : No Data Available to plot
+* **SERVER_ERR_500** : Server side connection issue
+* **DATA_ERR_500** : No Data Available to plot
 
 ### Steps to run :
 ##### Client Side Instructions :
