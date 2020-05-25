@@ -10,16 +10,11 @@ The project uses React JS Framework as the front-end website and flask(python) a
 * npm module xml2json (https://github.com/abdolence/x2js)
 * python libraries required for backend :
     
-    * flask
-    * sqlite3
-    * xml
-    * pandas
-    * base64
-    * matplotlib
-    * mpl_toolkits
-    * io
-    * os
-    * sqlalchemy(optional, required if a new db has to be created)
+    * flask : Handle the routing operations between frontend and backend
+    * sqlite3, sqlalchemy(optional, required if a new db has to be created) : For database operations
+    * xml, io, os : Usually available with python package, used fo system and file operations
+    * pandas, base64 : For data operations
+    * matplotlib, mpl_toolkits : For operations involving data plotting
 
 ### Error Codes :
 * SERVER_ERR_500 : Server side connection issue
@@ -69,8 +64,9 @@ Please refer to the set of dependent libraries listed above and install if not a
     * StatusCode **200** for **Success**
     * StatusCode **500** for **failure**
 * Please ensure that the following line is present right after **"import os"** as it is an ENV_VARIABLE declaration necessary for **"Basemap"** :  
-**os.environ['PROJ_LIB'] = r'c:\ProgramData\Python\pkgs\proj4-5.2.0-ha925a31_1\Library\share'**  
-For more information : https://github.com/matplotlib/basemap/issues/419
+**os.environ['PROJ_LIB'] = r'c:\ProgramData\Python\pkgs\proj4-5.2.0-ha925a31_1\Library\share'**   
+Please change the above location as per Python installation specific to your system.  
+In case of problems, please refer : https://github.com/matplotlib/basemap/issues/419  
 * In case of creation of new .db file, please run the below commands in python console or in a new python file :  
 **from sqlalchemy import create_engine**  
 **import sqlite3 as sql**  
