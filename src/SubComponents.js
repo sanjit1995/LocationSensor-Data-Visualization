@@ -41,6 +41,6 @@ export const DocumentHeader = (props) => (
     <div
     border="1px solid #black" style={{ fontSize:"30px", justifyContent:'center', backgroundColor: "#f6f8fa", color: 'red'}}
     align='center'>
-    Location Sensor Data
+        {props.value}
     </div>
 );

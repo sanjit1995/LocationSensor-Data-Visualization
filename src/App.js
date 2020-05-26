@@ -237,7 +237,9 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <DocumentHeader />
+        <DocumentHeader
+          value={"Location Sensor Data"}
+        />
         <table className="table table-striped" style={{ tableLayout: "auto", width: "100%" }} id="sensor_data">
           <TableHeader
             values={["Latitude", "Longitude", "Height"]}
@@ -260,13 +262,13 @@ class App extends React.Component {
             ))}
             <tr>
               <RowInput
-                type="text"
+                type="number"
                 name="latitude"
                 value={this.state.currentInput.latitude}
                 onChange={this.storeInput}
               />
               <RowInput
-                type="text"
+                type="number"
                 name="longitude"
                 value={this.state.currentInput.longitude}
                 onChange={this.storeInput}
