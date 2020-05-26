@@ -71,7 +71,7 @@ In case of problems, please refer : https://github.com/matplotlib/basemap/issues
 **from sqlalchemy import create_engine**  
 **import sqlite3 as sql**  
 **create_engine('sqlite:///C:\\[name-of-app]\\backend\\mySqlite.db', echo=True)**  
-**conn = sql.connect('mySqlite.db')**  
+**conn = sql.connect('C:\\[name-of-app]\\backend\\mySqlite.db\\mySqlite.db')**  
 **print("Opened database successfully")**  
 * In case the table needs to be recreated, please run below commands as well :   
 **conn.execute('CREATE TABLE location_sensor_data (latitude TEXT, longitude TEXT, height INT)')**  
