@@ -70,12 +70,13 @@ In case of problems, please refer : https://github.com/matplotlib/basemap/issues
 * In case of creation of new .db file, please run the below commands in python console or in a new python file :  
 **from sqlalchemy import create_engine**  
 **import sqlite3 as sql**  
-**create_engine('sqlite:///C:\\react_js_app\\backend\\mySqlite.db', echo=True)**  
+**create_engine('sqlite:///C:\\[name-of-app]\\backend\\mySqlite.db', echo=True)**  
 **conn = sql.connect('mySqlite.db')**  
 **print("Opened database successfully")**  
 * In case the table needs to be recreated, please run below commands as well :   
 **conn.execute('CREATE TABLE location_sensor_data (latitude TEXT, longitude TEXT, height INT)')**  
 **print("Table created successfully")**  
+Please also change the location of the db file created, in plotter.py and backend_flask_xml.py  
 
 ##### Final code run :
 * Start the FrontEnd server by following command inside **[name-of-app]** directory :  
