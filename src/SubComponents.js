@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Handles all active row input data
 export const RowInput = (props) => (
     <td align='center'>
         <input
@@ -13,12 +14,14 @@ export const RowInput = (props) => (
     </td>
 );
 
+// Handles all frozen rows data
 export const RowItem = (props) => (
     <td align='center'>
         <span> {props.value} </span>
     </td>
 );
 
+// Handles Table Header section in the web-page
 export const TableHeader = (props) => (
     <thead style={{ backgroundColor: "#4CAF50", color: 'white', tableLayout: "auto", width: "180px" }}>
         <tr>
@@ -31,12 +34,14 @@ export const TableHeader = (props) => (
     </thead>
 );
 
+// Handles Response Header section in the web-page
 export var ResponseMessage = (props) => (
     <p align='center'>
         {props.value}
     </p>
 );
 
+// Handles Document Header section in the web-page
 export const DocumentHeader = (props) => (
     <div
     border="1px solid #black" style={{ fontSize:"30px", justifyContent:'center', backgroundColor: "#f6f8fa", color: 'red'}}

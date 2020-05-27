@@ -1,9 +1,12 @@
 /* eslint-disable no-unused-vars */
+
+// Import necessary libraries
 import React from 'react';
 import { TableHeader, RowItem, RowInput, ResponseMessage, DocumentHeader } from './SubComponents.js'
 import './App.css';
 import X2JS from 'xml2json';
 
+// To reset the currentInput values
 function getInitialState() {
   return {
     latitude: "",
@@ -12,10 +15,19 @@ function getInitialState() {
   };
 }
 
+// Main App class, an ES6 class to define a component. Comes with a render() function which renders changes
+// automatically
 class App extends React.Component {
+
+  // Constructor to define default parameters
   constructor(props) {
     super(props);
 
+    // Declare default state values
+    // rows : Stores all the frozen data
+    // currentInput : Stores all the data in the active row
+    // responseMessage : Message to appear after every operation
+    // pic : Image content to display the plot on the web-page
     this.state = {
       rows: [],
       currentInput: getInitialState(),
@@ -24,7 +36,9 @@ class App extends React.Component {
     };
   }
 
+  // To set the response header message
   setResponseHeader = (msg) => {
+    // To only change the responseMessage state variable
     this.setState((state) => {
       const { rows, currentInput, responseMessage } = state;
       const newState = {
@@ -36,13 +50,14 @@ class App extends React.Component {
     })
   }
 
+  // To check if all the required parameters are entered
   validInput = () => {
     const { currentInput } = this.state;
     return currentInput.height && currentInput.latitude && currentInput.longitude;
   }
 
+  // To add the currentInput to the rows array and reset the currentInput
   submitInput = () => {
-    if (this.validInput()) {
       this.setState((state, props) => {
         const { rows, currentInput, responseMessage } = state;
         const newState = {
@@ -52,13 +67,10 @@ class App extends React.Component {
         }
         console.log(currentInput, newState);
         return newState;
-      })
-    }
-    else {
-      console.error("Empty Input");
-    }
+      });
   }
 
+  // To convert all rows data into a proper XML format to send as REQUEST and return
   convertToXml = () => {
     var x2js = new X2JS()
     const tempRows = this.state.rows
@@ -76,21 +88,26 @@ class App extends React.Component {
     return completeXml
   }
 
+  // To check if there is at least one complete and valid row present
   validRowsData = () => {
     const { rows } = this.state;
     return rows.length;
   }
 
+  // To verify the validity of data and send a backend POST request
   submitAll = () => {
-    console.log(this.validRowsData())
     if (!this.validRowsData()) {
       this.setResponseHeader("Please enter all data and click confirm when done")
     }
     else {
       console.log(this.state)
       console.log("Sending request")
+
+      // To convert the data into an XML request
       var completeXml = this.convertToXml()
       console.log(completeXml)
+
+      // To send a POST request to the Backend Server with the XML body
       fetch('/result', {
         method: "POST",
         cache: "no-cache",
@@ -99,8 +116,8 @@ class App extends React.Component {
         },
         body: completeXml
       })
+          // On receiving response, check status code and display Response Header accordingly
         .then(response => {
-          //console.log(response.status);
           if(response.status === 500){
             throw new Error("SERVER_ERR_500 : CHECK SERVER CONNECTION")
           }
@@ -119,6 +136,7 @@ class App extends React.Component {
           this.setResponseHeader(error.message)
         });
 
+      // Reset the state
       this.setState((state) => {
         const { rows, currentInput, responseMessage } = state;
         const newState = {
@@ -131,6 +149,7 @@ class App extends React.Component {
     }
   }
 
+  // For every activity in the active row inputs, store the input values dynamically
   storeInput = event => {
     const { name, value } = event.target;
     const currentInput = this.state.currentInput;
@@ -140,6 +159,7 @@ class App extends React.Component {
     })
   }
 
+  // To remove a row from the frozen data
   handleRemoveRow = (idx) => {
     console.log(idx)
     var tempRows = [...this.state.rows]; // make a separate copy of the array
@@ -149,12 +169,14 @@ class App extends React.Component {
     }
   };
 
+  // To clear all data from the active row
   removeCurrentInput = () => {
     this.setState({
       currentInput: getInitialState()
     });
   };
 
+  // Sends a POST request to backend to clear all data from the table
   clearTable = () => {
     fetch('/clear', {
       method: "POST",
@@ -185,6 +207,7 @@ class App extends React.Component {
         });
   }
 
+  // Sends a GET request to backend to fetch the image data
   fetchImage = () => {
     var outside;
     fetch('/plotImage', {
@@ -194,23 +217,20 @@ class App extends React.Component {
         "content_type": "application/text",
       }
     })
+        // Extract the Image data from the XML and display in the Image area of the web-page
     .then(response => {
-        //console.log(response.status);
         if(response.status === 500){
             throw new Error("SERVER_ERR_500 : CHECK SERVER CONNECTION")
         }
         return response.text();
     })
     .then(xml => {
-      //console.log(json.status);
       var x2js = new X2JS()
       var jsonObj = x2js.xml_str2json(xml)
       var imgContent = "data:image/png;base64, " + jsonObj.sensor_data.image_data;
-      //console.log(jsonObj.sensor_data.status_code);
       var statusVal = jsonObj.sensor_data.status_code
       imgContent = imgContent.replace("b'","");
       imgContent = imgContent.replace("'","");
-      //console.log(imgContent)
       if(statusVal === "200"){
         this.setState({
           pic: imgContent
@@ -228,12 +248,14 @@ class App extends React.Component {
       });
   }
 
+  // To clear the Image from the Image Area
   clearImage = () => {
     this.setState({
       pic: ""
     });
   }
 
+  // render() method constantly monitors and renders automatically whenever a state variable is changed
   render() {
     return (
       <div>
@@ -255,9 +277,6 @@ class App extends React.Component {
                     Clear
                   </button>
                 </td>
-                {/* <td style={{ width: '10%' }} align='center'>
-                  {this.selectButtonAction(this.state.rows.length, idx, this.state.rows[idx].button)}
-                </td> */}
               </tr>
             ))}
             <tr>
