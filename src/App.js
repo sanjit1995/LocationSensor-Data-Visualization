@@ -2,8 +2,7 @@
 
 // Import necessary libraries
 import React from 'react';
-import { TableHeader, RowItem, RowInput, ResponseMessage, DocumentHeader } from './SubComponents.js'
-import './App.css';
+import { TableHeader, RowItem, RowInput, ResponseMessage, DocumentHeader } from './SubComponents.js';
 import X2JS from 'xml2json';
 
 // To reset the currentInput values
