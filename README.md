@@ -47,7 +47,7 @@ This is the backend side server address which will be routed to during runtime.
 For information on how to install go to : https://pip.pypa.io/en/stable/installing/
 * Once the above steps are done, this can be verified with below command :   
 **python -m pip --version**
-* Copy the content of **"backend"** folder inside the .zip file to local.
+* Go to the **"backend"** folder inside the **[name-of-app]**.
 * Now we need to install the dependent libraries required for this project. This can be done by :  
 **pip install [library-name]**  
 Please refer to the set of dependent libraries listed above and install if not already present.
