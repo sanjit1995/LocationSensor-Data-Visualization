@@ -64,7 +64,8 @@ Please refer to the set of dependent libraries listed above and install if not a
     * StatusCode **200** for **Success**
     * StatusCode **500** for **failure**
 * Please ensure that the following line is present right after **"import os"** as it is an ENV_VARIABLE declaration necessary for **"Basemap"** :  
-**os.environ['PROJ_LIB'] = r'c:\ProgramData\Python\pkgs\proj4-5.2.0-ha925a31_1\Library\share'**      
+**os.environ['PROJ_LIB'] = r'c:\ProgramData\Python\pkgs\proj4-5.2.0-ha925a31_1\Library\share'**(For Python)  
+**os.environ['PROJ_LIB'] = r'c:\ProgramData\Anaconda3\pkgs\proj4-5.2.0-ha925a31_1\Library\share'**(For Anaconda)  
 Please change the above location as per Python installation specific to your system.  
 In case of problems, please refer : https://github.com/matplotlib/basemap/issues/419  
 * In case of creation of new .db file, please run the below commands in python console or in a new python file :  
