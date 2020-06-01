@@ -8,6 +8,7 @@ export const RowInput = (props) => (
             name={props.name}
             value={props.value}
             onChange={props.onChange}
+            ref={props.reference}
             style={{ width: "100%", border: "1px solid #ccc", borderRadius: "4px", padding: "6px 10px",
                     display: "inline-block", boxSizing: "border-box"}}
         />
@@ -35,7 +36,7 @@ export const TableHeader = (props) => (
 );
 
 // Handles Response Header section in the web-page
-export var ResponseMessage = (props) => (
+export const ResponseMessage = (props) => (
     <p align='center'>
         {props.value}
     </p>

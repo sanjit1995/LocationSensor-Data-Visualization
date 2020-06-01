@@ -3,6 +3,7 @@
 // Import necessary libraries
 import React from 'react';
 import { TableHeader, RowItem, RowInput, ResponseMessage, DocumentHeader } from './SubComponents.js';
+import './App.css';
 import X2JS from 'xml2json';
 
 // To reset the currentInput values
@@ -20,7 +21,9 @@ class App extends React.Component {
 
   // Constructor to define default parameters
   constructor(props) {
-    super(props);
+    super(props)
+    // To refer to the first element of current row
+    this.inputRef = React.createRef()
 
     // Declare default state values
     // rows : Stores all the frozen data
@@ -35,6 +38,13 @@ class App extends React.Component {
     };
   }
 
+  // Gets executed after the render() method
+  componentDidMount() {
+    // To focus the selected element everytime on reloading the page
+    this.inputRef.current.focus()
+    console.log(this.inputRef)
+  }
+
   // To set the response header message
   setResponseHeader = (msg) => {
     // To only change the responseMessage state variable
@@ -45,7 +55,7 @@ class App extends React.Component {
         currentInput: getInitialState(),
         responseMessage: msg
       }
-      return newState;
+        return newState;
     })
   }
 
@@ -154,7 +164,7 @@ class App extends React.Component {
     const currentInput = this.state.currentInput;
     currentInput[name] = value;
     this.setState({
-      currentInput
+      currentInput : currentInput
     })
   }
 
@@ -284,6 +294,7 @@ class App extends React.Component {
                 name="latitude"
                 value={this.state.currentInput.latitude}
                 onChange={this.storeInput}
+                reference={this.inputRef}
               />
               <RowInput
                 type="number"
