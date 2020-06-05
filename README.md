@@ -35,7 +35,7 @@ Check installation by **npm -v** in the command line. This should print the vers
 * A default web page appears and now we are good to go.
 * Please copy the contents of the React folder in the .zip file to the location of **[name-of-app]** and replace the existing directories if required.
 * To learn about the default files and folder structure go to : https://create-react-app.dev/docs/folder-structure
-* An additional dependency **"xml2json"** is to be installed. Please download it from https://github.com/abdolence/x2js as .zip. Unzip the contents and copy the folder into **[name-of-app]**. Rename the folder as **"xml2json"** if it is present as **"x2js"**.
+* An additional dependency **"xml2json"** is to be installed. Please download it from https://github.com/abdolence/x2js as .zip. Unzip the contents and copy the folder into **[name-of-app]/node_modules**. Rename the folder as **"xml2json"** if it is present as **"x2js"**.
 * An additional file named "SubComponents.js" contains all the SubComponents used in "App.js"
 * In the **"package.json"** file inside **[name-of-app]** which holds all the metadata relevant to the project, ensure that the proxy address is present at the end :  
 **"proxy": "http://127.0.0.1:5000/"**  
