@@ -1,4 +1,3 @@
-#### This project is a part of Communication and Visualization Coursework belonging to HsKA.
 The project uses React JS Framework as the front-end website and flask(python) as the backend framework. The Website runs on the development server which comes available with the react application.
 
 * For more information about **ReactJS** : https://reactjs.org/docs/
